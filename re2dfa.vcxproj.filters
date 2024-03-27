@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="D:\prog\re2dfa\main.cpp">
+    <ClCompile Include="D:\prog\formalLangs\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\prog\re2dfa\task.cpp">
+    <ClCompile Include="D:\prog\formalLangs\task.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\prog\re2dfa\CMakeLists.txt" />
+    <CustomBuild Include="D:\prog\formalLangs\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{34658DAE-833C-36DB-B2BD-7E327DAA186B}</UniqueIdentifier>
+      <UniqueIdentifier>{1327C4F1-8944-3688-B664-B99FB83D23C0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

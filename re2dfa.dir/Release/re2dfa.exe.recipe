@@ -2,10 +2,10 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\prog\re2dfa\x64\Release\ZERO_CHECK</FullPath>
+      <FullPath>D:\prog\formalLangs\x64\Release\ZERO_CHECK</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>D:\prog\re2dfa\Release\re2dfa.exe</FullPath>
+      <FullPath>D:\prog\formalLangs\Release\re2dfa.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

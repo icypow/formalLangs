@@ -1,0 +1,6 @@
+﻿  1>Checking Build System
+  CMake is re-running because D:/prog/re2dfa/CMakeFiles/generate.stamp dependency file is missing.
+CUSTOMBUILD : CMake error : The source directory "D:/prog/re2dfa" does not appear to contain CMakeLists.txt.
+  Specify --help for usage, or press the help button on the CMake GUI.
+  Не удается найти указанную метку пакетного файла - VCEnd
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(237,5): error MSB8066: пользовательская сборка для "D:\prog\re2dfa\CMakeFiles\f20deb9035985987c00843117772cc63\generate.stamp.rule" завершила работу с кодом 1.

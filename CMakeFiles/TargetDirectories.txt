@@ -1,4 +1,4 @@
-D:/prog/re2dfa/CMakeFiles/re2dfa.dir
-D:/prog/re2dfa/CMakeFiles/INSTALL.dir
-D:/prog/re2dfa/CMakeFiles/ALL_BUILD.dir
-D:/prog/re2dfa/CMakeFiles/ZERO_CHECK.dir
+D:/prog/formalLangs/CMakeFiles/re2dfa.dir
+D:/prog/formalLangs/CMakeFiles/INSTALL.dir
+D:/prog/formalLangs/CMakeFiles/ALL_BUILD.dir
+D:/prog/formalLangs/CMakeFiles/ZERO_CHECK.dir
