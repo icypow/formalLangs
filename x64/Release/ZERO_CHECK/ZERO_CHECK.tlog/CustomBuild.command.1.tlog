@@ -1,0 +1,10 @@
+^D:\PROG\RE2DFA\CMAKEFILES\F20DEB9035985987C00843117772CC63\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/prog/re2dfa -BD:/prog/re2dfa --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/prog/re2dfa/re2dfa.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
