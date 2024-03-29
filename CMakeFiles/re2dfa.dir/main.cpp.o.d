@@ -1,5 +1,5 @@
-CMakeFiles/re2dfa.dir/main.cpp.o: /mnt/d/prog/formalLangs/main.cpp \
- /usr/include/stdc-predef.h /mnt/d/prog/formalLangs/api.hpp \
+CMakeFiles/re2dfa.dir/main.cpp.o: /home/alex/prog/formalLangs/main.cpp \
+ /usr/include/stdc-predef.h /home/alex/prog/formalLangs/api.hpp \
  /usr/include/c++/11/string \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

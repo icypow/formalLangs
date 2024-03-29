@@ -10,7 +10,7 @@ int main() {
 
   std::string line;
   std::getline(infile, line);
-  outfile << re2dfa(line).to_string();
+  std::cout << re2dfa(line).to_string();
 
   return 0;
 }

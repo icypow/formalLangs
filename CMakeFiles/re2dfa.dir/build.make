@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/d/prog/formalLangs
+CMAKE_SOURCE_DIR = /home/alex/prog/formalLangs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/d/prog/formalLangs
+CMAKE_BINARY_DIR = /home/alex/prog/formalLangs
 
 # Include any dependencies generated for this target.
 include CMakeFiles/re2dfa.dir/depend.make
@@ -72,30 +72,30 @@ include CMakeFiles/re2dfa.dir/flags.make
 CMakeFiles/re2dfa.dir/main.cpp.o: CMakeFiles/re2dfa.dir/flags.make
 CMakeFiles/re2dfa.dir/main.cpp.o: main.cpp
 CMakeFiles/re2dfa.dir/main.cpp.o: CMakeFiles/re2dfa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/prog/formalLangs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/re2dfa.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/re2dfa.dir/main.cpp.o -MF CMakeFiles/re2dfa.dir/main.cpp.o.d -o CMakeFiles/re2dfa.dir/main.cpp.o -c /mnt/d/prog/formalLangs/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/prog/formalLangs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/re2dfa.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/re2dfa.dir/main.cpp.o -MF CMakeFiles/re2dfa.dir/main.cpp.o.d -o CMakeFiles/re2dfa.dir/main.cpp.o -c /home/alex/prog/formalLangs/main.cpp
 
 CMakeFiles/re2dfa.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/re2dfa.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/prog/formalLangs/main.cpp > CMakeFiles/re2dfa.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/prog/formalLangs/main.cpp > CMakeFiles/re2dfa.dir/main.cpp.i
 
 CMakeFiles/re2dfa.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/re2dfa.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/prog/formalLangs/main.cpp -o CMakeFiles/re2dfa.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/prog/formalLangs/main.cpp -o CMakeFiles/re2dfa.dir/main.cpp.s
 
 CMakeFiles/re2dfa.dir/task.cpp.o: CMakeFiles/re2dfa.dir/flags.make
 CMakeFiles/re2dfa.dir/task.cpp.o: task.cpp
 CMakeFiles/re2dfa.dir/task.cpp.o: CMakeFiles/re2dfa.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/prog/formalLangs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/re2dfa.dir/task.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/re2dfa.dir/task.cpp.o -MF CMakeFiles/re2dfa.dir/task.cpp.o.d -o CMakeFiles/re2dfa.dir/task.cpp.o -c /mnt/d/prog/formalLangs/task.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/prog/formalLangs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/re2dfa.dir/task.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/re2dfa.dir/task.cpp.o -MF CMakeFiles/re2dfa.dir/task.cpp.o.d -o CMakeFiles/re2dfa.dir/task.cpp.o -c /home/alex/prog/formalLangs/task.cpp
 
 CMakeFiles/re2dfa.dir/task.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/re2dfa.dir/task.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/prog/formalLangs/task.cpp > CMakeFiles/re2dfa.dir/task.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/prog/formalLangs/task.cpp > CMakeFiles/re2dfa.dir/task.cpp.i
 
 CMakeFiles/re2dfa.dir/task.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/re2dfa.dir/task.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/prog/formalLangs/task.cpp -o CMakeFiles/re2dfa.dir/task.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/prog/formalLangs/task.cpp -o CMakeFiles/re2dfa.dir/task.cpp.s
 
 # Object files for target re2dfa
 re2dfa_OBJECTS = \
@@ -109,7 +109,7 @@ re2dfa: CMakeFiles/re2dfa.dir/main.cpp.o
 re2dfa: CMakeFiles/re2dfa.dir/task.cpp.o
 re2dfa: CMakeFiles/re2dfa.dir/build.make
 re2dfa: CMakeFiles/re2dfa.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/d/prog/formalLangs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable re2dfa"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alex/prog/formalLangs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable re2dfa"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/re2dfa.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -121,6 +121,6 @@ CMakeFiles/re2dfa.dir/clean:
 .PHONY : CMakeFiles/re2dfa.dir/clean
 
 CMakeFiles/re2dfa.dir/depend:
-	cd /mnt/d/prog/formalLangs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/d/prog/formalLangs /mnt/d/prog/formalLangs /mnt/d/prog/formalLangs /mnt/d/prog/formalLangs /mnt/d/prog/formalLangs/CMakeFiles/re2dfa.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alex/prog/formalLangs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alex/prog/formalLangs /home/alex/prog/formalLangs /home/alex/prog/formalLangs /home/alex/prog/formalLangs /home/alex/prog/formalLangs/CMakeFiles/re2dfa.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/re2dfa.dir/depend
 

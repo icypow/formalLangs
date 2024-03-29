@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/d/prog/formalLangs
+# Install script for directory: /home/alex/prog/formalLangs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,12 +49,12 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/./re2dfa"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE EXECUTABLE FILES "/mnt/d/prog/formalLangs/re2dfa")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE EXECUTABLE FILES "/home/alex/prog/formalLangs/re2dfa")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/./re2dfa" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/./re2dfa")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/./re2dfa"
-         OLD_RPATH "/mnt/d/prog/formalLangs/re2dfa:/mnt/d/prog/formalLangs:"
+         OLD_RPATH "/home/alex/prog/formalLangs/re2dfa:/home/alex/prog/formalLangs:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/./re2dfa")
@@ -70,5 +70,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/d/prog/formalLangs/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/alex/prog/formalLangs/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

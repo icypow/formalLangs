@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/d/prog/formalLangs/main.cpp" "CMakeFiles/re2dfa.dir/main.cpp.o" "gcc" "CMakeFiles/re2dfa.dir/main.cpp.o.d"
-  "/mnt/d/prog/formalLangs/task.cpp" "CMakeFiles/re2dfa.dir/task.cpp.o" "gcc" "CMakeFiles/re2dfa.dir/task.cpp.o.d"
+  "/home/alex/prog/formalLangs/main.cpp" "CMakeFiles/re2dfa.dir/main.cpp.o" "gcc" "CMakeFiles/re2dfa.dir/main.cpp.o.d"
+  "/home/alex/prog/formalLangs/task.cpp" "CMakeFiles/re2dfa.dir/task.cpp.o" "gcc" "CMakeFiles/re2dfa.dir/task.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -11,7 +11,7 @@
 #include <set>
 #include <stack>
 #include <algorithm>
-
+#include <queue>
 
 using namespace std;
 int Priority(const char &c);
@@ -30,6 +30,16 @@ std::set<T, CMP, ALLOC> operator + (
     std::inserter(s, s.begin()));
   return s;
 }
+
+template <class T, class CMP = std::less<T>, class ALLOC = std::allocator<T> >
+std::set<T, CMP, ALLOC> operator * (
+  const std::set<T, CMP, ALLOC> &s1, const std::set<T, CMP, ALLOC> &s2)
+{
+  std::set<T, CMP, ALLOC> s;
+  std::set_intersection(s1.begin(), s1.end(), s2.begin(), s2.end(),
+    std::inserter(s, s.begin()));
+  return s;
+}
 struct Tree{
     bool nullable;
     Tree *left = nullptr, *right = nullptr;
@@ -43,12 +53,14 @@ string makepoliz(const string regExp){
     vector<char> outputList;//output vector
     stack<char> s;//main stack
     string temp = prettify(regExp);
-    cout << temp <<endl;
+    int count = 0;
+    //cout << temp <<endl;
     for (char sym : temp)  //read from right to left
     {
         if(isalnum(sym) || sym == '#' || sym == '_')
         {
             //cout<<"isalnum\n";
+            count++;
             outputList.push_back(sym);
         }
         if(sym == '(')
@@ -79,12 +91,11 @@ string makepoliz(const string regExp){
         outputList.push_back(s.top());
         s.pop();
     }
-    int counter = 0;
     for (char i: outputList){
         res += i;
         if (isalnum(i)){
-            counter++;
-            literpos['i'] = literpos['i'] + set<int>{counter};
+            count--;
+            literpos[i] = literpos[i] + set<int>{count};
         }
     }
     //cout<<res<<'\n';
@@ -118,10 +129,18 @@ bool isOperator(const char &c)
 {
     return (c == '*' || c == '.' || c =='|');
 }
-
+bool SetEqSet(std::queue<std::set<int>> check, std::set<int> cur_q ){
+	while (!check.empty()) {
+        std::set<int> cur_set = check.front();
+        check.pop();
+		if (cur_set == cur_q )
+			return true;
+	}
+	return false;
+}
 Tree *bulidTree(string &polished, int &curpos){
     char b = polished.back();
-    cout<<"intree "<<b<<endl;
+    //cout<<"intree "<<b<<endl;
     polished.pop_back();
     Tree *newTree = new Tree;
     if (b == '.' || b == '|'){
@@ -151,7 +170,7 @@ Tree *bulidTree(string &polished, int &curpos){
             followpos[i] = followpos[i] + newTree->left->firstpos;
     }
     else {
-        cout<<"inalpha "<<b<<endl;
+        //cout<<"inalpha "<<b<<endl;
         newTree->pos = curpos;
         if (b == '_') {
             newTree->nullable = true;
@@ -163,66 +182,89 @@ Tree *bulidTree(string &polished, int &curpos){
         }
         curpos++;
     }
-    cout << newTree->pos<<" pos"<<endl;
-    for (auto i : newTree->firstpos)
-        cout<<i<<" ";
-    cout<<endl;
+    // cout << newTree->pos<<" pos"<<endl;
+    // for (auto i : newTree->firstpos)
+    //     cout<<i<<" ";
+    // cout<<endl;
     return newTree;
 }
 
-void re2dfa(const std::string& regExp){
+DFA re2dfa(const std::string& regExp){
     string polished = makepoliz(regExp);
     cout<<"polished "<<polished<<endl;
     int n = 0;
     Tree *root = bulidTree(polished, n);
     //cout<<root->pos;
     set<int> firstpos = root->firstpos;
-    for (auto i : firstpos)
-        cout<<i<<endl;
+    // for (auto i : firstpos)
+    //     cout<<i<<endl;
+    Alphabet alphabet = Alphabet(regExp);
 
-    // Alphabet alphabet = Alphabet(regExp);
-	// DFA res = DFA(alphabet);
-    // std::vector<std::set<int>> states;
-    // states.push_back(root->firstpos);
+	for(auto it = literpos.cbegin(); it != literpos.cend(); ++it)
+	{
+		std::cout << it->first << " "<<std::endl;
+		for (auto num : it->second){
+			std::cout<<num<<" ";
+		};
+		std::cout<<std::endl;
 
-    // res.create_state(std::to_string(0), root->nullable);
-    // res.set_initial(std::to_string(0));
-    // for (int index = 0; index < states.size(); index++) {
-    //     for (auto &alpha_from_alphabet: alphabet) {
-    //         std::set<int> new_state;
-    //         for (auto &index_alpha_in_cur_state: states[index]) {
-    //             if (polished[literpos[index_alpha_in_cur_state]] == alpha_from_alphabet) {
-    //                 new_state.insert(followpos[index_alpha_in_cur_state].begin(),
-    //                                  followpos[index_alpha_in_cur_state].end());
-    //             }
-    //         }
+	}
+	std::queue<std::set<int>> queue;
+	std::queue<std::set<int>> marked;
+    std::map<std::set<int>, std::string> State2Name;
+	std::cout << alphabet.to_string();
+	DFA res = DFA(alphabet);
+	for(auto it = literpos.cbegin(); it != literpos.cend(); ++it)
+	{
+		std::cout << it->first << " "<<std::endl;
+		for (auto num : it->second){
+			std::cout<<num<<" ";
+		};
+		std::cout<<std::endl;
 
-    //         if (!new_state.empty()) {
-    //             int index_to = 0;
-    //             for (; index_to < states.size(); index_to++) {
-    //                 if (states[index_to] == new_state) {
-    //                     break;
-    //                 }
-    //             } //existing state
-    //             if (index_to == states.size()) {
-    //                 //new state
-    //                 index_to = states.size();
-    //                 states.push_back(new_state);
-    //                 res.create_state(std::to_string(index_to), new_state.count(literpos.size() - 1) == 1);
-    //             }
-    //             res.set_trans(std::to_string(index), alpha_from_alphabet, std::to_string(index_to));
-    //         }
-    //     }
-    // }
+	}
+    std::set<int> first_state = root->firstpos;
+	queue.push(first_state);
+	State2Name[first_state] = std::to_string(marked.size()+queue.size()-1);
+	
+	res.create_state(State2Name[first_state],
+					first_state.find(0) != first_state.end());
+	res.set_initial(State2Name[first_state]);
+	
+	while (!queue.empty()) {
+		std::set<int> cur_state = queue.front();
+		marked.push(cur_state);
+		queue.pop();
+		for (char symbol : alphabet) {				
+			std::set<int>  tmpstate = literpos[symbol]*cur_state;
+			std::set<int> followpos_of_S={};
+		
+			for (auto state : tmpstate) {
+				followpos_of_S.insert(followpos[state].begin(), followpos[state].end());
+			}
 
+			if (!followpos_of_S.empty()){
+				if (!SetEqSet(marked, followpos_of_S) && !SetEqSet(queue, followpos_of_S) ){
+					
 
-    //return res;
+					queue.push(followpos_of_S);
+					State2Name[followpos_of_S] = std::to_string(marked.size()+queue.size()-1);
+					
+					res.create_state(State2Name[followpos_of_S],  
+									 followpos_of_S.find(0) != followpos_of_S.end());
+				}
+				res.set_trans(State2Name[cur_state], symbol, State2Name[followpos_of_S]);
+			}
+		}
+	
+	}
+	return res;
 }
 
 
-int main(){
-    re2dfa("|||||a|bc");
+// int main(){
+//     re2dfa("(ab|c)|(a|b)");
 
-    return 0;
-}
+//     return 0;
+// }
 

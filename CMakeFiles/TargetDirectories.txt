@@ -1,7 +1,7 @@
-/mnt/d/prog/formalLangs/CMakeFiles/re2dfa.dir
-/mnt/d/prog/formalLangs/CMakeFiles/edit_cache.dir
-/mnt/d/prog/formalLangs/CMakeFiles/rebuild_cache.dir
-/mnt/d/prog/formalLangs/CMakeFiles/list_install_components.dir
-/mnt/d/prog/formalLangs/CMakeFiles/install.dir
-/mnt/d/prog/formalLangs/CMakeFiles/install/local.dir
-/mnt/d/prog/formalLangs/CMakeFiles/install/strip.dir
+/home/alex/prog/formalLangs/CMakeFiles/re2dfa.dir
+/home/alex/prog/formalLangs/CMakeFiles/edit_cache.dir
+/home/alex/prog/formalLangs/CMakeFiles/rebuild_cache.dir
+/home/alex/prog/formalLangs/CMakeFiles/list_install_components.dir
+/home/alex/prog/formalLangs/CMakeFiles/install.dir
+/home/alex/prog/formalLangs/CMakeFiles/install/local.dir
+/home/alex/prog/formalLangs/CMakeFiles/install/strip.dir

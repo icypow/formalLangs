@@ -1,1 +1,1 @@
-/usr/bin/c++ -rdynamic CMakeFiles/re2dfa.dir/main.cpp.o CMakeFiles/re2dfa.dir/task.cpp.o -o re2dfa   -L/mnt/d/prog/formalLangs/re2dfa  -L/mnt/d/prog/formalLangs  -Wl,-rpath,/mnt/d/prog/formalLangs/re2dfa:/mnt/d/prog/formalLangs: -lRegexCheckerCore_Linux 
+/usr/bin/c++ -rdynamic CMakeFiles/re2dfa.dir/main.cpp.o CMakeFiles/re2dfa.dir/task.cpp.o -o re2dfa   -L/home/alex/prog/formalLangs/re2dfa  -L/home/alex/prog/formalLangs  -Wl,-rpath,/home/alex/prog/formalLangs/re2dfa:/home/alex/prog/formalLangs: -lRegexCheckerCore_Linux 

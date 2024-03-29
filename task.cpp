@@ -1,272 +1,268 @@
 #include "api.hpp"
 #include <string>
-#include <algorithm>
 #include <iostream>
-#include <stack>
-#include <map>
 #include <set>
+#include <vector>
+#include <string>
+#include <map>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <set>
+#include <stack>
+#include <algorithm>
 #include <queue>
 
+using namespace std;
+int Priority(const char &c);
+bool isOperator(const char &c);
+string prettify(const string reg);
+map<int, set<int>> followpos;
+map<char, set<int>> literpos;
 
-class node {
-  public:
-    char symbol;
-    node *left = nullptr;
-    node *right = nullptr;
-    bool nullable =  false;
-	int pos_num = 0; 
-    std::set<int> firstpos = {}; 
-    std::set<int> lastpos = {}; 
+
+template <class T, class CMP = less<T>, class ALLOC = allocator<T> >
+set<T, CMP, ALLOC> operator + (
+  const set<T, CMP, ALLOC> &s1, const set<T, CMP, ALLOC> &s2)
+{
+  set<T, CMP, ALLOC> s;
+  set_union(s1.begin(), s1.end(), s2.begin(), s2.end(),
+    inserter(s, s.begin()));
+  return s;
+}
+
+template <class T, class CMP = less<T>, class ALLOC = allocator<T> >
+set<T, CMP, ALLOC> operator * (
+  const set<T, CMP, ALLOC> &s1, const set<T, CMP, ALLOC> &s2)
+{
+  set<T, CMP, ALLOC> s;
+  set_intersection(s1.begin(), s1.end(), s2.begin(), s2.end(),
+    inserter(s, s.begin()));
+  return s;
+}
+struct Tree{
+    bool nullable;
+    Tree *left = nullptr, *right = nullptr;
+    set<int> firstpos = {}, lastpos = {};
+    int pos;
 };
 
-/**
- * \brief Строит расширенное регулярное выражение.                     
- * \param rv: корректное регулярное выражение.
- * \param alphabet: алфавит выражения.
- * \return Расширенное ругулярное выражение с '&', '_', '#'.
- */
-std::string complete_rv(const std::string &rv, Alphabet &alphabet){
 
-  
-  std::string full_rv;
-  full_rv.insert(0, 1, '(');
-  full_rv.push_back(rv[0]);
-
-  for ( int i = 1 ; i < rv.size(); ++i){
-
-	if (rv[i-1] == '*' || rv[i-1] == ')' || alphabet.has_char(rv[i-1]) )
-		if (rv[i] == '(' || alphabet.has_char(rv[i]))
-			full_rv.push_back('&');
-    if (rv[i-1] == '(' || rv[i-1] == '|')
-        if (rv[i] == ')' || rv[i] == '|' )
-        	full_rv.push_back('_');
-
-	full_rv.push_back(rv[i]);
-
-  }
-	full_rv.push_back(')');
-	full_rv.push_back('&');
-	full_rv.push_back('#');
-
-  return full_rv;
+string makepoliz(const string regExp){
+    string res;
+    vector<char> outputList;//output vector
+    stack<char> s;//main stack
+    string temp = prettify(regExp);
+    int count = 0;
+    //cout << temp <<endl;
+    for (char sym : temp)  //read from right to left
+    {
+        if(isalnum(sym) || sym == '#' || sym == '_')
+        {
+            //cout<<"isalnum\n";
+            count++;
+            outputList.push_back(sym);
+        }
+        if(sym == '(')
+        {
+            s.push(sym);
+        }
+        if(sym == ')')
+        {
+            while(!s.empty() && s.top()!= '(')
+            {
+                outputList.push_back(s.top());
+                s.pop();
+            }
+            s.pop();
+        }
+        if(isOperator(sym) == true)
+        {
+            while(!s.empty() && Priority(s.top()) >= Priority(sym))
+            {
+                outputList.push_back(s.top());
+                s.pop();
+            }
+            s.push(sym);
+        }
+    }
+    while(!s.empty())
+    {
+        outputList.push_back(s.top());
+        s.pop();
+    }
+    for (char i: outputList){
+        res += i;
+        if (isalnum(i) || i == '#' || i == '_'){
+            count--;
+            literpos[i] = literpos[i] + set<int>{count};
+        }
+    }
+    //cout<<res<<'\n';
+    return res;
 }
 
-
-/**
- * \brief Строит польскую запись по выражению.                     
- * \param full_rv: Расширенное ругулярное выражение.
- * \param alphabet: алфавит выражения.
- * \return Польская запись расширенного РВ.
- */
-std::string full_rv2polish(const std::string &full_rv, Alphabet alphabet){
-
-	std::string output;
-	std::stack<char> operands_stack;
-	std::map<char, int> priority = {{'(', 1},{'|', 2},{'&', 3},{'*', 4}};
-	alphabet.insert('#'); 
-	alphabet.insert('_'); 
-	for (char sym : full_rv) {
-
-		if ( alphabet.has_char(sym) ) 
-			output.push_back(sym);
-
-		else
-			switch (sym) {
-				case ')':
-					while (operands_stack.top() != '(') {
-						output.push_back(operands_stack.top());
-						operands_stack.pop();
-					}
-					operands_stack.pop();
-					break;
-
-				case '(':
-					operands_stack.push(sym);
-					break;
-
-				default:
-					while (!operands_stack.empty() && (priority[sym] <= priority[operands_stack.top()])) {
-						output.push_back(operands_stack.top());
-						operands_stack.pop();
-					}
-					operands_stack.push(sym);
-					break;
-			}
-			
-	}
-	while (!operands_stack.empty()) {
-		output.push_back(operands_stack.top());
-		operands_stack.pop();
-	}
-	
-	return output;
+string prettify(const string regExp){
+    string res;
+    res.push_back(regExp[0]);
+    for ( int i = 1 ; i < regExp.size(); ++i){
+        if ((regExp[i-1] == '*' || regExp[i-1] == ')' || isalnum(regExp[i-1]))&&(regExp[i] == '(' || isalnum(regExp[i]))&&(regExp[i] != '*'))
+            res.push_back('.');
+        if ((regExp[i-1] == '(' || regExp[i-1] == '|')&&((regExp[i] == ')' || regExp[i] == '|' )))
+            res.push_back('_');
+        //cout<<regExp[i]<<endl;
+        res.push_back(regExp[i]);
+    }
+	res = '(' + res + ").#";
+    //cout<<res<<'\n';
+    return res;
 }
 
-
-/**
- * \brief Строит синтаксическое дерево по польской записи РВ, заполняет таблицу followpos                     
- * \param s: Польская запись ругулярного выражения.
- * \param num: Текущая позиция
- * \param followpos: Пустая таблица pos <=> followpos
- * \return Ссылка на корень дерева.
- */
-node * polish2tree(std::string &str, int &num,
-			   std::map<int, std::set<int>> &followpos,
-			   std::map<char, std::set<int>> &charpos) {
-					
-	if (!str.size()) return nullptr;
-	
-	char cur_char = str.back();
-	str.pop_back();
-	node * elem = new node;
-	elem->symbol = cur_char;
-    std::cout<<"curchar"<<cur_char<<std::endl;
-	switch (cur_char){
-
-		case '|':
-			elem->right = polish2tree(str, num, followpos, charpos);
-			elem->left = polish2tree(str, num, followpos, charpos);
-			elem->nullable = elem->left->nullable || elem->right->nullable;
-			elem->firstpos.insert(elem->left->firstpos.begin(), elem->left->firstpos.end());
-			elem->firstpos.insert(elem->right->firstpos.begin(), elem->right->firstpos.end());
-			elem->lastpos.insert(elem->left->lastpos.begin(), elem->left->lastpos.end());
-			elem->lastpos.insert(elem->right->lastpos.begin(), elem->right->lastpos.end());
-			break;
-
-		case '&':
-			elem->right = polish2tree(str, num,followpos, charpos);
-			elem->left = polish2tree(str, num,followpos, charpos);
-			elem->nullable = elem->left->nullable && elem->right->nullable;
-			if (elem->left->nullable) 
-				elem->firstpos.insert(elem->right->firstpos.begin(), elem->right->firstpos.end());
-			if (elem->right->nullable) 
-				elem->lastpos.insert(elem->left->lastpos.begin(), elem->left->lastpos.end());
-
-			elem->firstpos.insert(elem->left->firstpos.begin(), elem->left->firstpos.end());
-			elem->lastpos.insert(elem->right->lastpos.begin(), elem->right->lastpos.end());
-
-			for (auto i : elem->left->lastpos) 
-				followpos[i].insert(elem->right->firstpos.begin(), elem->right->firstpos.end());
-			break;
-
-		case '*':
-			elem->left = polish2tree(str, num,followpos,charpos);
-			elem->nullable = true;
-			elem->firstpos.insert(elem->left->firstpos.begin(), elem->left->firstpos.end());
-			elem->lastpos.insert(elem->left->lastpos.begin(), elem->left->lastpos.end());
-			for (auto i : elem->left->lastpos) 
-				followpos[i].insert(elem->left->firstpos.begin(), elem->left->firstpos.end());
-			break;
-
-		default:
-			elem->pos_num = num;
-			charpos[cur_char].insert(num);
-			num += 1;
-			if (cur_char == '_') {
-				elem->nullable = true;
-			} else {
-				elem->nullable = false;
-				elem->firstpos.insert(elem->pos_num);
-				elem->lastpos.insert(elem->pos_num);
-			}
-	}
-	return elem;
+int Priority(const char &c)
+{
+    if(c == '*') return 3;
+    if(c == '.') return 2;
+    if(c== '|') return 1;
+    else return 0;
 }
-		
-/**
- * \brief Проверяет наличие состояния в множестве состояний                     
- * \param check: Множество состояний.
- * \param cur_q: Текуще состояние.
- * \return true/false
- */		
-bool SetEqSet(std::queue<std::set<int>> check, std::set<int> cur_q ){
+bool isOperator(const char &c)
+{
+    return (c == '*' || c == '.' || c =='|');
+}
+bool SetEqSet(queue<set<int>> check, set<int> cur_q ){
 	while (!check.empty()) {
-        std::set<int> cur_set = check.front();
+        set<int> cur_set = check.front();
         check.pop();
 		if (cur_set == cur_q )
 			return true;
 	}
 	return false;
 }
+Tree *bulidTree(string &polished, int &curpos){
+    char b = polished.back();
+    //cout<<"intree "<<b<<endl;
+    polished.pop_back();
+    Tree *newTree = new Tree;
+    if (b == '.' || b == '|'){
+        newTree->right = bulidTree(polished, curpos);
+        newTree->left = bulidTree(polished, curpos);
+        if (b == '.'){
+            newTree->nullable = newTree->left->nullable && newTree->right->nullable;
+            for (auto i : newTree->left->lastpos)
+                followpos[i] = followpos[i] + newTree->right->firstpos;
+        }
+        else newTree->nullable = newTree->left->nullable || newTree->right->nullable;
+        if (newTree->left->nullable || b == '|'){
+            newTree->firstpos = newTree->left->firstpos + newTree->right->firstpos;
+        }
+        newTree->firstpos = newTree->firstpos + newTree->left->firstpos;
+        if (newTree->right->nullable || b == '|'){
+            newTree->lastpos = newTree->left->lastpos + newTree->right->lastpos;
+        }
+        newTree->lastpos = newTree->lastpos + newTree->right->lastpos;
+    }
+    else if (b == '*'){
+        newTree->left = bulidTree(polished, curpos);
+        newTree->nullable = true;
+        newTree->firstpos = newTree->left->firstpos;
+        newTree->lastpos = newTree->left->lastpos;
+        for (auto i : newTree->left->lastpos)
+            followpos[i] = followpos[i] + newTree->left->firstpos;
+    }
+    else {
+        //cout<<"inalpha "<<b<<endl;
+        newTree->pos = curpos;
+        if (b == '_') {
+            newTree->nullable = true;
+        }
+        else {
+            newTree->nullable = false;
+            newTree->firstpos = newTree->firstpos + set<int>{curpos};
+            newTree->lastpos = newTree->lastpos + set<int>{curpos};
+        }
+        curpos++;
+    }
+    // cout << newTree->pos<<" pos"<<endl;
+    // for (auto i : newTree->firstpos)
+    //     cout<<i<<" ";
+    // cout<<endl;
+    return newTree;
+}
 
-    
+DFA re2dfa(const string& regExp){
+    string polished = makepoliz(regExp);
+    cout<<"polished "<<polished<<endl;
+    int n = 0;
+    Tree *root = bulidTree(polished, n);
+    //cout<<root->pos;
+    set<int> firstpos = root->firstpos;
+    // for (auto i : firstpos)
+    //     cout<<i<<endl;
+    Alphabet alphabet = Alphabet(regExp);
 
-DFA re2dfa(const std::string &s) {
-	
-	if (s.empty()){
-		DFA res = DFA(Alphabet("#"));
-		res.create_state("null", true);
-		res.set_initial("null");
-		return res;
+	for(auto it = literpos.cbegin(); it != literpos.cend(); ++it)
+	{
+		cout << it->first << " "<<endl;
+		for (auto num : it->second){
+			cout<<num<<" ";
+		};
+		cout<<endl;
+
 	}
-	
-	Alphabet alphabet = Alphabet(s);
-	
-	
-
-	std::map<int, std::set<int>> followpos; // таблица pos <=> followpos
-	std::map<char, std::set<int>> charpos; //   символ <=> позиции в РВ
-	std::map<std::set<int>, std::string> State2Name; // состояние <=> имя
-
-	followpos[0] = {};
-	int num = 0;
-	node *rv_tree;
-	std::string tmp;
-	tmp = complete_rv(s, alphabet);
-	
-
-	tmp = full_rv2polish(tmp,alphabet);
-	
-	rv_tree = polish2tree(tmp, num, followpos, charpos);
-    std::cout<<tmp<<std::endl;
-	for (auto i : rv_tree->firstpos) std::cout<<i<<std::endl;
-	std::set<int> first_state = rv_tree->firstpos;
-	
-	std::queue<std::set<int>> queue;
-	std::queue<std::set<int>> marked;
-	std::cout << alphabet.to_string();
+	std::queue<set<int>> queue;
+	std::queue<set<int>> marked;
+    map<set<int>, string> State2Name;
+	cout << alphabet.to_string();
 	DFA res = DFA(alphabet);
+	for(auto it = literpos.cbegin(); it != literpos.cend(); ++it)
+	{
+		cout << it->first << " "<<endl;
+		for (auto num : it->second){
+			cout<<num<<" ";
+		};
+		cout<<"enfofliter"<<endl;
 
+	}
+    set<int> first_state = root->firstpos;
 	queue.push(first_state);
-	State2Name[first_state] = std::to_string(marked.size()+queue.size()-1);
+	State2Name[first_state] = to_string(marked.size()+queue.size()-1);
 	
-	res.create_state(State2Name[first_state],  
+	res.create_state(State2Name[first_state],
 					first_state.find(0) != first_state.end());
 	res.set_initial(State2Name[first_state]);
 	
-	
-
 	while (!queue.empty()) {
-		std::set<int> cur_state = queue.front();
+		set<int> cur_state = queue.front();
 		marked.push(cur_state);
 		queue.pop();
 		for (char symbol : alphabet) {				
-			std::set<int> S={};
-			set_intersection(charpos[symbol].begin(), charpos[symbol].end(), 
-								cur_state.begin(), cur_state.end(),
-								std::inserter(S, S.begin()));
-			
-			std::set<int> followpos_of_S={};
-		
-			for (auto state : S) {
-				
-				followpos_of_S.insert(followpos[state].begin(), followpos[state].end());
+			set<int> tmpstate = literpos[symbol]*cur_state;
+			set<int>ftmp={};
+			for (auto state : tmpstate) {
+				ftmp = ftmp + followpos[state]; 
 			}
 
-			if (!followpos_of_S.empty()){
-				if (!SetEqSet(marked, followpos_of_S) && !SetEqSet(queue, followpos_of_S) ){
+			if (!ftmp.empty()){
+				if (SetEqSet(marked, ftmp) && !SetEqSet(queue, ftmp) ){
+					queue.push(ftmp);
+					State2Name[ftmp] = to_string(marked.size()+queue.size()-1);
 					
-
-					queue.push(followpos_of_S);
-					State2Name[followpos_of_S] = std::to_string(marked.size()+queue.size()-1);
-					
-					res.create_state(State2Name[followpos_of_S],  
-									 followpos_of_S.find(0) != followpos_of_S.end());
+					res.create_state(State2Name[ftmp],  
+									 ftmp.find(0) != ftmp.end());
 				}
-				res.set_trans(State2Name[cur_state], symbol, State2Name[followpos_of_S]);
+				res.set_trans(State2Name[cur_state], symbol, State2Name[ftmp]);
 			}
 		}
 	
 	}
 	return res;
 }
+
+
+// int main(){
+//     re2dfa("(ab|c)|(a|b)");
+
+//     return 0;
+// }
+
+
